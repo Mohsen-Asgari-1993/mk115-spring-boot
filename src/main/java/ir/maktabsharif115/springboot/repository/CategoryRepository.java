@@ -3,6 +3,7 @@ package ir.maktabsharif115.springboot.repository;
 import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.service.dto.projection.CategoryBriefProjection;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface CategoryRepository extends JpaRepository<Category, Long>,
         JpaSpecificationExecutor<Category>, CategoryCustomRepository {
+
+    @Override
+    @EntityGraph(value = Category.FULL_GRAPH)
+//    @EntityGraph(attributePaths = Category_.PARENT)
+    List<Category> findAll();
 
     //    JPQL
     @Query(

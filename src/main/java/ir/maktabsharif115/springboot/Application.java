@@ -12,13 +12,7 @@ public class Application {
         ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
         CategoryRepository categoryRepository = run.getBean(CategoryRepository.class);
 
-        System.out.println(
-                "findAllByJdbcTemplate: " + categoryRepository.findAllByJdbcTemplate()
-        );
-
-        System.out.println(
-                "findAllByJdbcClient: " + categoryRepository.findAllByJdbcClient()
-        );
+        System.out.println(categoryRepository.findAll());
 
     }
 

@@ -13,9 +13,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @ToString
+@NamedEntityGraph(
+        name = Category.FULL_GRAPH,
+        attributeNodes = @NamedAttributeNode(value = Category_.PARENT)
+)
 public class Category implements Serializable {
 
     public static final String TABLE_NAME = "category";
+    public static final String FULL_GRAPH = "category_full_graph";
     public static final String TITLE = "title";
     public static final String PARENT_ID = "parent_id";
 
