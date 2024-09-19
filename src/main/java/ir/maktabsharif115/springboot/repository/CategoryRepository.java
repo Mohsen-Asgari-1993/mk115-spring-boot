@@ -38,4 +38,23 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     )
     List<CategoryBriefProjection> findProjectionCustom();
 
+
+    @Query(
+            nativeQuery = true,
+            value = "select c.id as id, c.title as title from category c where c.id = :id"
+    )
+    CategoryBriefProjection findByIdProjection(@Param("id") Long id);
+
+    <P> P findById(Long id, Class<P> pClass);
+
+    <P> List<P> findAllByIdIsNotNull(Class<P> pClass);
+
+    /*@Query(
+            """
+                    select c.id as id, c.title as title,
+                    (select count(p.id) from posts p where p.categoryId = c.id) as usage
+                    from Category c
+                    """
+    )
+    Page<CategoryUsageProjection> findAllByUsage(Pageable pageable);*/
 }
