@@ -21,3 +21,13 @@ sms:
     token: 892jr9ijd98jfdsifj
     url: https://sms.ir
     call_back_url: https://my-domain.ir/call-back
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: debug
+            simple:
+              JdbcClient: debug

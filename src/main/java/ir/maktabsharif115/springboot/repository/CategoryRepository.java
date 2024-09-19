@@ -2,10 +2,13 @@ package ir.maktabsharif115.springboot.repository;
 
 import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.service.dto.projection.CategoryBriefProjection;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.List;
 @Repository
 @SuppressWarnings("unused")
 public interface CategoryRepository extends JpaRepository<Category, Long>,
-        JpaSpecificationExecutor<Category> {
+        JpaSpecificationExecutor<Category>, CategoryCustomRepository {
 
     //    JPQL
     @Query(
@@ -60,4 +63,47 @@ public interface CategoryRepository extends JpaRepository<Category, Long>,
                     """
     )
     Page<CategoryUsageProjection> findAllByUsage(Pageable pageable);*/
+}
+
+@SuppressWarnings("unused")
+interface CategoryCustomRepository {
+
+    List<Category> findAllByJdbcTemplate();
+
+    List<Category> findAllByJdbcClient();
+
+}
+
+@RequiredArgsConstructor
+class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
+
+    private final JdbcClient jdbcClient;
+
+    private final JdbcTemplate jdbcTemplate;
+
+    @Override
+    public List<Category> findAllByJdbcTemplate() {
+        return jdbcTemplate.query(
+                "select * from category",
+                (rs, rowNum) -> {
+                    Category category = new Category();
+                    category.setId(rs.getLong(1));
+                    category.setTitle(rs.getString(2));
+                    return category;
+                }
+        );
+    }
+
+    @Override
+    public List<Category> findAllByJdbcClient() {
+        return jdbcClient.sql("select * from category")
+                .query(
+                        (rs, rowNum) -> {
+                            Category category = new Category();
+                            category.setId(rs.getLong(1));
+                            category.setTitle(rs.getString(2));
+                            return category;
+                        }
+                ).list();
+    }
 }
