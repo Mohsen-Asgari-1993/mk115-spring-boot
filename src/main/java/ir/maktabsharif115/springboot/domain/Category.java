@@ -12,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Category implements Serializable {
 
     public static final String TABLE_NAME = "category";
