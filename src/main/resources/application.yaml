@@ -8,6 +8,14 @@ server.port: 8081
 
 sms:
   sms-ir:
+    status: deactive
+    username: mohsen
+    password: 123456789
+    token: 892jr9ijd98jfdsifj
+    url: https://sms.ir
+    call_back_url: https://my-domain.ir/call-back
+  kavenegar:
+    status: true
     username: mohsen
     password: 123456789
     token: 892jr9ijd98jfdsifj

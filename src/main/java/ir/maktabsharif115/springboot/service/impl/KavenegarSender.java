@@ -4,21 +4,22 @@ import ir.maktabsharif115.springboot.service.SmsSender;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "sms.sms-ir.status", havingValue = "active")
-public class SmsIrSender implements SmsSender {
+//@ConditionalOnProperty(value = "sms.kavenegar.status", havingValue = "active")
+@ConditionalOnExpression(value = "${sms.kavenegar.status}")
+public class KavenegarSender implements SmsSender {
 
     private final Config config;
 
     @Override
     public void send(String mobileNumber, String content) {
-        System.out.println("in sms-ir");
+        System.out.println("in kavenegar");
         System.out.println("username: " + config.getUsername());
         System.out.println("password: " + config.getPassword());
         System.out.println("url: " + config.getUrl());
@@ -27,10 +28,11 @@ public class SmsIrSender implements SmsSender {
     }
 
     @Component
-    @ConfigurationProperties(prefix = "sms.sms-ir")
+    @ConfigurationProperties(prefix = "sms.kavenegar")
+//    @ConditionalOnProperty(value = "sms.kavenegar.status", havingValue = "active")
+    @ConditionalOnExpression(value = "${sms.kavenegar.status}")
     @Getter
     @Setter
-    @ConditionalOnProperty(value = "sms.sms-ir.status", havingValue = "active")
     public static class Config {
 
         private String status;
