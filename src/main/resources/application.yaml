@@ -5,3 +5,11 @@ spring:
     active: dev
 
 server.port: 8081
+
+sms:
+  sms-ir:
+    username: mohsen
+    password: 123456789
+    token: 892jr9ijd98jfdsifj
+    url: https://sms.ir
+    call_back_url: https://my-domain.ir/call-back
