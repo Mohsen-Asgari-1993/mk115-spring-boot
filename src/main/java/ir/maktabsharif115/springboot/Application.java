@@ -1,33 +1,32 @@
 package ir.maktabsharif115.springboot;
 
-import ir.maktabsharif115.springboot.repository.CategoryRepository;
-import ir.maktabsharif115.springboot.service.dto.projection.IdProjection;
-import ir.maktabsharif115.springboot.service.dto.projection.TitleProjection;
+import ir.maktabsharif115.springboot.domain.Category;
+import ir.maktabsharif115.springboot.service.CategoryService;
+import ir.maktabsharif115.springboot.service.dto.extra.CategorySearch;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
-        CategoryRepository categoryRepository = run.getBean(CategoryRepository.class);
+        CategoryService categoryService = run.getBean(CategoryService.class);
 
-
-        System.out.println(
-                "IdProjection: " + categoryRepository.findById(1L, IdProjection.class).getId()
+        Page<Category> page = categoryService.findAll(
+                CategorySearch.builder()
+                        .title("s")
+                        .build(),
+                PageRequest.of(0, 10)
         );
-
-        System.out.println(
-                "TitleProjection: " + categoryRepository.findById(1L, TitleProjection.class).getTitle()
-        );
-
-        categoryRepository.findAllByIdIsNotNull(TitleProjection.class)
-                .forEach(data -> System.out.println(data.getTitle()));
-
-        categoryRepository.findAllByIdIsNotNull(IdProjection.class)
-                .forEach(data -> System.out.println(data.getId()));
+        if (page.hasContent()) {
+            System.out.println(page.getContent().getFirst());
+        } else {
+            System.out.println("empty");
+        }
 
     }
 
