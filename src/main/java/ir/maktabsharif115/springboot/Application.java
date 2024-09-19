@@ -12,15 +12,8 @@ public class Application {
         ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
         CategoryRepository categoryRepository = run.getBean(CategoryRepository.class);
 
-        System.out.println(
-                "findAllByTitleJpql: " + categoryRepository.findAllByTitleJpql("sp")
-        );
-        System.out.println(
-                "findAllByTitleNative: " + categoryRepository.findAllByTitleNative("sp")
-        );
-        System.out.println(
-                "findAllByTitleContainingIgnoreCase: " + categoryRepository.findAllByTitleContainingIgnoreCase("sp")
-        );
+        categoryRepository.findProjectionCustom()
+                .forEach(projection -> System.out.println("id: " + projection.getId() + " title: " + projection.getTitle()));
 
     }
 

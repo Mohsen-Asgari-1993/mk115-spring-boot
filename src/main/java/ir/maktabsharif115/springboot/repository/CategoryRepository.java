@@ -1,6 +1,7 @@
 package ir.maktabsharif115.springboot.repository;
 
 import ir.maktabsharif115.springboot.domain.Category;
+import ir.maktabsharif115.springboot.service.dto.projection.CategoryBriefProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +29,13 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByTitleContainingIgnoreCase(String title);
 
     List<Category> findAllByParent_IdIsNull();
+
+    List<Category> findAllByParent_Id(Long parentId);
+
+    @Query(
+            nativeQuery = true,
+            value = "select c.id as id, c.title as title from category c"
+    )
+    List<CategoryBriefProjection> findProjectionCustom();
 
 }
