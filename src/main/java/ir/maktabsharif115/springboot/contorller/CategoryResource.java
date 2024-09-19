@@ -5,11 +5,10 @@ import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-//@Controller
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
@@ -17,10 +16,12 @@ public class CategoryResource {
 
     private final CategoryService categoryService;
 
-    //    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @GetMapping(value = "/{id}")
-//    @ResponseBody
-    public CategoryDTO findById(@PathVariable Long id) {
+
+    //    @GetMapping("/{id}/{name}")
+//    /categories/1/myname
+    @GetMapping
+//    /categories?id=1&name=myname&key=value
+    public CategoryDTO findById(@RequestParam Long id, @RequestParam(required = false) String name) {
         Category category = categoryService.findById(id);
         return new CategoryDTO(
                 category.getId(), category.getTitle(),
