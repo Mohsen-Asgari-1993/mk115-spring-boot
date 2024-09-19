@@ -8,6 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Setter
 public class MyService {
 
-    @Value("${my-username}")
+    @Value("${my-username:mohsen}")
     private String username;
 }
