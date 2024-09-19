@@ -1,6 +1,7 @@
 package ir.maktabsharif115.springboot;
 
-import ir.maktabsharif115.springboot.service.SmsSender;
+import ir.maktabsharif115.springboot.domain.Category;
+import ir.maktabsharif115.springboot.repository.CategoryRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,7 +11,12 @@ public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
-        run.getBean(SmsSender.class).send(null, null);
+        CategoryRepository categoryRepository = run.getBean(CategoryRepository.class);
+        categoryRepository.save(
+                Category.builder()
+                        .title("sport")
+                        .build()
+        );
     }
 
 }
