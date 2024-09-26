@@ -4,7 +4,6 @@ import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.domain.Category_;
 import ir.maktabsharif115.springboot.repository.CategoryRepository;
 import ir.maktabsharif115.springboot.service.CategoryService;
-import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.extra.CategorySearch;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -37,24 +35,6 @@ public class CategoryServiceImpl implements CategoryService {
     private final JdbcTemplate jdbcTemplate;
 
     private final JdbcClient jdbcClient;
-
-    private final TestService testService;
-
-    @Override
-    @Transactional
-    public Category create(CategoryCreationDTO dto) {
-        test();
-        testService.never();
-        Category category = new Category();
-        category.setTitle(dto.getTitle());
-        return baseRepository.save(category);
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.NEVER)
-    public void test() {
-        System.out.println("in test method");
-    }
 
     @Override
     @Transactional

@@ -1,7 +1,6 @@
 package ir.maktabsharif115.springboot.service;
 
 import ir.maktabsharif115.springboot.domain.Category;
-import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.extra.CategorySearch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,10 +10,6 @@ import java.util.List;
 
 @SuppressWarnings("unused")
 public interface CategoryService {
-
-    Category create(CategoryCreationDTO dto);
-
-    void test();
 
     Category save(Category category);
 

@@ -2,10 +2,12 @@ package ir.maktabsharif115.springboot.contorller;
 
 import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.service.CategoryService;
-import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/categories")
@@ -13,19 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryResource {
 
     private final CategoryService categoryService;
-
-    @PostMapping
-    public CategoryDTO create(@RequestBody CategoryCreationDTO dto) {
-        Category category = categoryService.create(dto);
-        return new CategoryDTO(
-                category.getId(), category.getTitle(),
-                category.getParent() != null ? new CategoryDTO(
-                        category.getParent().getId(),
-                        category.getParent().getTitle(),
-                        null
-                ) : null
-        );
-    }
 
 
     //    @GetMapping("/{id}/{name}")
