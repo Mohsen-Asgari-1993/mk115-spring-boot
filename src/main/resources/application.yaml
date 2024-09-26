@@ -3,6 +3,10 @@ spring:
     name: spring-boot
   profiles:
     active: dev
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
 
 server.port: 8081
 
@@ -21,6 +25,7 @@ sms:
     token: 892jr9ijd98jfdsifj
     url: https://sms.ir
     call_back_url: https://my-domain.ir/call-back
+
 
 logging:
   level:
