@@ -4,6 +4,7 @@ import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
+import ir.maktabsharif115.springboot.validators.AllowedValues;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -64,6 +65,15 @@ public class CategoryResource {
 
         @Size(min = 2, max = 3)
         private List<String> names;
+
+        @AllowedValues(required = false, values = {"1", "2"}, message = "only '1', '2' is allowed")
+        private String type;
+
+        @AllowedValues(values = {"1", "2"}, message = "only '1', '2' is allowed")
+        private String model;
+
+        @AllowedValues(values = {"RED", "BLUE"}, message = "only 'RED', 'BLUE' is allowed")
+        private List<String> colors;
 
         @Valid
         private ValidationDetailDTO dto;
