@@ -1,5 +1,6 @@
 package ir.maktabsharif115.springboot.service.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,6 @@ import java.io.Serializable;
 public class CategoryCreationDTO implements Serializable {
 
     private String title;
+
+    private Long parentId;
 }
