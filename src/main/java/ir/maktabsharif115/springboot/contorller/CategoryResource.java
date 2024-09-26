@@ -4,6 +4,7 @@ import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class CategoryResource {
     private final CategoryService categoryService;
 
     @PostMapping
-    public CategoryDTO create(@RequestBody CategoryCreationDTO dto) {
+    public CategoryDTO create(@RequestBody @Valid CategoryCreationDTO dto) {
         Category category = categoryService.create(dto);
         return new CategoryDTO(
                 category.getId(),
