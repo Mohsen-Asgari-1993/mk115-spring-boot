@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,8 @@ public class CategoryResource {
     @PostMapping
     public ResponseEntity<CategoryDTO> create(@RequestBody @Valid CategoryCreationDTO dto) {
         Category category = categoryService.create(dto);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("my-custom-header", "my-custom-header-value");
         return new ResponseEntity<>(
                 new CategoryDTO(
                         category.getId(),
@@ -47,6 +50,7 @@ public class CategoryResource {
                                         ).build()
                                 : null
                 ),
+                httpHeaders,
                 HttpStatus.CREATED
         );
     }
