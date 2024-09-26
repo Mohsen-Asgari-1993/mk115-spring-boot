@@ -15,7 +15,7 @@ import java.io.Serializable;
 @ToString
 @NamedEntityGraph(
         name = Category.FULL_GRAPH,
-        attributeNodes = @NamedAttributeNode(value = Category_.PARENT)
+        attributeNodes = @NamedAttributeNode(value = "parent")
 )
 public class Category implements Serializable {
 

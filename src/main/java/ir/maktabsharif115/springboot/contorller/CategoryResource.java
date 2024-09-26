@@ -1,6 +1,7 @@
 package ir.maktabsharif115.springboot.contorller;
 
 import ir.maktabsharif115.springboot.domain.Category;
+import ir.maktabsharif115.springboot.mapper.CategoryMapper;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
@@ -28,12 +29,19 @@ public class CategoryResource {
 
     private final CategoryService categoryService;
 
+    private final CategoryMapper categoryMapper;
+
     @PostMapping
     public ResponseEntity<CategoryDTO> create(@RequestBody @Valid CategoryCreationDTO dto) {
         Category category = categoryService.create(dto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("my-custom-header", "my-custom-header-value");
         return new ResponseEntity<>(
+                categoryMapper.convertEntityToDTO(category),
+                httpHeaders,
+                HttpStatus.CREATED
+        );
+        /*return new ResponseEntity<>(
                 new CategoryDTO(
                         category.getId(),
                         category.getTitle(),
@@ -52,7 +60,7 @@ public class CategoryResource {
                 ),
                 httpHeaders,
                 HttpStatus.CREATED
-        );
+        );*/
     }
 
     @PostMapping("/validation")
