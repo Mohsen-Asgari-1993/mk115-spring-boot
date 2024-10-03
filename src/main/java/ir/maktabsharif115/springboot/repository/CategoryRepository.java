@@ -24,6 +24,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long>,
 //    @EntityGraph(attributePaths = Category_.PARENT)
     List<Category> findAll();
 
+    @EntityGraph(value = Category.FULL_GRAPH)
+//    @EntityGraph(attributePaths = Category_.PARENT)
+    List<Category> findAllByIsActive(Boolean isActive);
+
     //    JPQL
     @Query(
             "select c from Category c where c.title like concat('%', :title, '%') "

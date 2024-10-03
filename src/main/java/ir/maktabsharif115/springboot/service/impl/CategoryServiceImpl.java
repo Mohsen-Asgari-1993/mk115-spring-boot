@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,6 +25,11 @@ public class CategoryServiceImpl implements CategoryService {
         category.setTitle(dto.getTitle());
         setParent(category, dto.getParentId());
         return baseRepository.save(category);
+    }
+
+    @Override
+    public List<Category> findAllForSite() {
+        return baseRepository.findAllByIsActive(true);
     }
 
     private void setParent(Category category, Long parentId) {

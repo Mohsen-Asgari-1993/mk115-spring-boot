@@ -22,6 +22,7 @@ public class Category implements Serializable {
     public static final String TABLE_NAME = "category";
     public static final String FULL_GRAPH = "category_full_graph";
     public static final String TITLE = "title";
+    public static final String IS_ACTIVE = "is_active";
     public static final String PARENT_ID = "parent_id";
 
     @Id
@@ -30,6 +31,9 @@ public class Category implements Serializable {
 
     @Column(name = TITLE)
     private String title;
+
+    @Column(name = IS_ACTIVE)
+    private Boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = PARENT_ID)
