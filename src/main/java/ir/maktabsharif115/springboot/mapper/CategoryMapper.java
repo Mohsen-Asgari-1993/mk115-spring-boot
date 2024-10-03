@@ -3,6 +3,7 @@ package ir.maktabsharif115.springboot.mapper;
 import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
+import ir.maktabsharif115.springboot.service.dto.CategoryUpdateDTO;
 import ir.maktabsharif115.springboot.service.dto.extra.CategorySiteDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,4 +23,6 @@ public interface CategoryMapper extends BaseMapper<Category, CategoryDTO> {
     CategoryCreationDTO convertToDTO(Category category);
 
     List<CategorySiteDTO> convertToSiteDTO(List<Category> categories);
+
+    Category toDomain(CategoryUpdateDTO dto);
 }

@@ -14,6 +14,10 @@ public interface CategoryService {
 
     List<Category> findAllForSite();
 
+    Category update(Category category);
+
+    Category findById(Long id);
+
     @Cacheable(value = CategoryServiceImpl.CACHE_NAME, key = "'all2'")
 //    @Cacheable(value = CACHE_NAME)
     List<Category> findAllForSiteTwo();

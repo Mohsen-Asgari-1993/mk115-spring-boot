@@ -1,12 +1,16 @@
 package ir.maktabsharif115.springboot.service.impl;
 
 import ir.maktabsharif115.springboot.domain.Category;
+import ir.maktabsharif115.springboot.exceptions.GeneralRuntimeException;
 import ir.maktabsharif115.springboot.repository.CategoryRepository;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +42,31 @@ public class CategoryServiceImpl implements CategoryService {
 //    @Cacheable(value = CACHE_NAME)
     public List<Category> findAllForSite() {
         return baseRepository.findAllByIsActive(true);
+    }
+
+    @Override
+//    @CachePut(value = CACHE_NAME, /*key = "#category.id"*/ key = "#result.id")
+//    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    @Caching(
+            put = @CachePut(value = CACHE_NAME, /*key = "#category.id"*/ key = "#result.id"),
+            evict = @CacheEvict(value = CACHE_NAME, key = "'all1'")
+    )
+    @Transactional
+    public Category update(Category category) {
+        Category needForUpdate = findById(category.getId());
+        needForUpdate.setParent(category.getParent());
+        needForUpdate.setTitle(category.getTitle());
+        needForUpdate.setIsActive(category.getIsActive());
+        return baseRepository.save(needForUpdate);
+    }
+
+    @Override
+    @Cacheable(value = CACHE_NAME, key = "#id")
+    public Category findById(Long id) {
+        return baseRepository.findById(id)
+                .orElseThrow(
+                        () -> new GeneralRuntimeException("category not found", HttpStatus.NOT_FOUND)
+                );
     }
 
     @Override

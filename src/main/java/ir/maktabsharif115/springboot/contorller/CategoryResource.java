@@ -6,6 +6,7 @@ import ir.maktabsharif115.springboot.mapper.CategoryMapper;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
+import ir.maktabsharif115.springboot.service.dto.CategoryUpdateDTO;
 import ir.maktabsharif115.springboot.validators.AllowedValues;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -59,6 +60,27 @@ public class CategoryResource {
                 httpHeaders,
                 HttpStatus.CREATED
         );*/
+    }
+
+
+    @PutMapping
+    public ResponseEntity<CategoryDTO> update(@RequestBody @Valid CategoryUpdateDTO dto) {
+        return ResponseEntity.ok(
+                categoryMapper.convertEntityToDTO(
+                        categoryService.update(
+                                categoryMapper.toDomain(dto)
+                        )
+                )
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(
+                categoryMapper.convertEntityToDTO(
+                        categoryService.findById(id)
+                )
+        );
     }
 
     @PostMapping("/validation")
