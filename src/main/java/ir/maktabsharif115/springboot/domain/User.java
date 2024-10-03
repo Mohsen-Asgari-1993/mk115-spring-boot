@@ -29,6 +29,7 @@ public class User implements Serializable {
     public static final String LAST_NAME = "last_name";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
+    public static final String IS_ACTIVE = "is_active";
     public static final String CREATE_DATE = "create_date";
     public static final String LAST_UPDATE_DATE = "last_update_date";
 
@@ -48,6 +49,9 @@ public class User implements Serializable {
 
     @Column(name = PASSWORD)
     private String password;
+
+    @Column(name = IS_ACTIVE)
+    private Boolean isActive = false;
 
     @CreatedDate
 //    @CreationTimestamp

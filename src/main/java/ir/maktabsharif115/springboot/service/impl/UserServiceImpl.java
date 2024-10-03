@@ -5,6 +5,7 @@ import ir.maktabsharif115.springboot.exceptions.GeneralRuntimeException;
 import ir.maktabsharif115.springboot.repository.UserRepository;
 import ir.maktabsharif115.springboot.service.UserService;
 import ir.maktabsharif115.springboot.service.dto.extra.UserRegisterDTO;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,26 +19,39 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
+    private final UserRepository baseRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    @PostConstruct
+    public void init() {
+        if (baseRepository.count() == 0) {
+            User user = new User();
+            user.setUsername("mohsen");
+            user.setPassword(passwordEncoder.encode("mohsen"));
+            user.setFirstName("mohsen");
+            user.setLastName("asgari");
+            user.setIsActive(true);
+            baseRepository.save(user);
+        }
+    }
 
     @Override
     @Transactional
     public void registerUser(UserRegisterDTO dto) {
-        if (repository.existsByUsername(dto.getUsername())) {
+        if (baseRepository.existsByUsername(dto.getUsername())) {
             throw new GeneralRuntimeException("duplicate username", HttpStatus.CONFLICT);
         }
         dto.setPassword(
                 passwordEncoder.encode(dto.getPassword())
         );
-        repository.save(
+        baseRepository.save(
                 User.of(dto)
         );
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return repository.findByUsername(username);
+        return baseRepository.findByUsername(username);
     }
 }

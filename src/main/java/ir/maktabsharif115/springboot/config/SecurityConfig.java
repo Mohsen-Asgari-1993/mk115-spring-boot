@@ -2,27 +2,26 @@ package ir.maktabsharif115.springboot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import java.util.ArrayList;
+import java.time.ZonedDateTime;
+import java.util.Optional;
 
 @Configuration
-@EnableJpaAuditing
+@EnableJpaAuditing(dateTimeProviderRef = "DateTimeProvider")
 public class SecurityConfig {
 
-    @Bean
+    @Bean("DateTimeProvider") // Makes ZonedDateTime compatible with auditing fields
+    @Primary
+    public DateTimeProvider auditingDateTimeProvider() {
+        return () -> Optional.of(ZonedDateTime.now());
+    }
+
+    /*@Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
                                                          PasswordEncoder passwordEncoder) {
         return new AuthenticationProvider() {
@@ -48,32 +47,7 @@ public class SecurityConfig {
                 return true;
             }
         };
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-        userDetailsService.createUser(
-                User.builder()
-                        .username("mohsen")
-                        .password(passwordEncoder.encode("mohsen"))
-                        .build()
-        );
-        userDetailsService.createUser(
-                User.builder()
-                        .username("ali")
-                        .password(passwordEncoder.encode("ali"))
-                        .build()
-        );
-        userDetailsService.createUser(
-                User.builder()
-                        .username("mat")
-                        .password(passwordEncoder.encode("mat"))
-                        .disabled(true)
-                        .build()
-        );
-        return userDetailsService;
-    }
+    }*/
 
     @Bean
     public PasswordEncoder passwordEncoder() {
