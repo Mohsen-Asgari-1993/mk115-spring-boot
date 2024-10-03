@@ -2,6 +2,7 @@ package ir.maktabsharif115.springboot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -18,6 +19,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import java.util.ArrayList;
 
 @Configuration
+@EnableJpaAuditing
 public class SecurityConfig {
 
     @Bean
