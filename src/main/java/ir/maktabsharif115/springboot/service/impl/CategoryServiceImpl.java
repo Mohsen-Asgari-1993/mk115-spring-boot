@@ -5,6 +5,8 @@ import ir.maktabsharif115.springboot.repository.CategoryRepository;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +20,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository baseRepository;
 
+    public static final String CACHE_NAME = "site_cats";
+
     @Override
     @Transactional
+//    @CacheEvict(value = CACHE_NAME, key = "'all1'")
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
     public Category create(CategoryCreationDTO dto) {
         Category category = new Category();
         category.setTitle(dto.getTitle());
@@ -28,7 +34,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Cacheable(value = CACHE_NAME, key = "'all1'")
+//    @Cacheable(value = CACHE_NAME)
     public List<Category> findAllForSite() {
+        return baseRepository.findAllByIsActive(true);
+    }
+
+    @Override
+    @Cacheable(value = CACHE_NAME, key = "'all2'")
+//    @Cacheable(value = CACHE_NAME)
+    public List<Category> findAllForSiteTwo() {
         return baseRepository.findAllByIsActive(true);
     }
 

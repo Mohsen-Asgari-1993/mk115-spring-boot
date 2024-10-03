@@ -33,7 +33,7 @@ public class Category implements Serializable {
     private String title;
 
     @Column(name = IS_ACTIVE)
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @ManyToOne
     @JoinColumn(name = PARENT_ID)
