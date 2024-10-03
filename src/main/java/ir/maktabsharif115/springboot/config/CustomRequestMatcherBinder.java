@@ -22,7 +22,7 @@ public class CustomRequestMatcherBinder implements RequestMatchersBinder {
                     @Override
                     public String[] getUrls() {
                         return new String[]{
-                                "/admin/**"
+                                "/categories/admin/**"
                         };
                     }
 

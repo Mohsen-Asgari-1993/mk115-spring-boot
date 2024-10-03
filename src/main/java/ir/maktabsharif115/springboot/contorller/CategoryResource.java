@@ -69,4 +69,9 @@ public class CategoryResource {
                 )
         );
     }
+
+    @GetMapping("/admin")
+    public void adminRole() {
+
+    }
 }
