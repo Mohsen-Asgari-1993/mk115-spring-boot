@@ -62,6 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Cacheable(value = CACHE_NAME, key = "#id")
+//    @Cacheable(value = CACHE_NAME, key = "T(java.util.Objects).hash(#id)")
     public Category findById(Long id) {
         return baseRepository.findById(id)
                 .orElseThrow(
@@ -71,6 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Cacheable(value = CACHE_NAME, key = "'all2'")
+//    @Cacheable(value = CACHE_NAME, key = "T(java.util.Objects).hash('all2')")
 //    @Cacheable(value = CACHE_NAME)
     public List<Category> findAllForSiteTwo() {
         return baseRepository.findAllByIsActive(true);

@@ -33,6 +33,8 @@ public class Role implements Serializable {
     @Column(name = NAME)
     private String name;
 
+//    TODO add isDefault
+
     @ManyToMany
     @JoinTable(
             name = ROLES_AUTHORITIES,

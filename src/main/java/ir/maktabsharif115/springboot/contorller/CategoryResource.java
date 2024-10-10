@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,6 +54,11 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(T(ir.maktabsharif115.springboot.util.AuthorityNames).CATEGORY_READ)")
+//    @PreAuthorize("hasAuthority('category-manage') || hasAuthority('category-manage-2')")
+//    @PreAuthorize("hasAnyAuthority('category-manage', 'category-manage-2')")
+//    @PreAuthorize("hasRole('ADMIN')")/*ROLE_ADMIN*/
+//    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")/*ROLE_ADMIN*/
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id, Authentication authentication) {
         log.info(authentication.getName());
         SecurityContext securityContext = SecurityContextHolder.getContext();

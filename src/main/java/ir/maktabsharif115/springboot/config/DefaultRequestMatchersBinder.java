@@ -6,7 +6,10 @@ public class DefaultRequestMatchersBinder implements RequestMatchersBinder {
 
     @Override
     public String[] getPermitAllUrls() {
-        return null;
+        return new String[]{
+                "/us/**",
+                "/api/**",
+        };
     }
 
     @Override
