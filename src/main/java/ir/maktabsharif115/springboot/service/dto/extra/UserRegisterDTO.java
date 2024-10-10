@@ -28,4 +28,8 @@ public class UserRegisterDTO implements Serializable {
 //    @Pattern()
     @Size(min = 8, max = 16)
     private String password;
+
+    @NotBlank
+    @Size(min = 5, max = 5)
+    private String captcha;
 }
