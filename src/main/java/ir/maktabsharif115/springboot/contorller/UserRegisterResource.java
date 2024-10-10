@@ -2,13 +2,11 @@ package ir.maktabsharif115.springboot.contorller;
 
 import ir.maktabsharif115.springboot.service.UserService;
 import ir.maktabsharif115.springboot.service.dto.extra.UserRegisterDTO;
+import ir.maktabsharif115.springboot.util.CookieContextHolder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.Semaphore;
 
@@ -30,5 +28,12 @@ public class UserRegisterResource {
         } finally {
             semaphore.release();
         }
+    }
+
+    @GetMapping
+    public void printCookie() {
+        System.out.println(
+                CookieContextHolder.getCookie()
+        );
     }
 }

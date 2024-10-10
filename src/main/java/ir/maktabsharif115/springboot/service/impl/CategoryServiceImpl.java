@@ -5,6 +5,7 @@ import ir.maktabsharif115.springboot.exceptions.GeneralRuntimeException;
 import ir.maktabsharif115.springboot.repository.CategoryRepository;
 import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
+import ir.maktabsharif115.springboot.util.CookieContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -41,6 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Cacheable(value = CACHE_NAME, key = "'all1'")
 //    @Cacheable(value = CACHE_NAME)
     public List<Category> findAllForSite() {
+        String cookie = CookieContextHolder.getCookie();
         return baseRepository.findAllByIsActive(true);
     }
 
