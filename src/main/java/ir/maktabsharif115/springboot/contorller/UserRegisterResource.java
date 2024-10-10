@@ -1,6 +1,10 @@
 package ir.maktabsharif115.springboot.contorller;
 
 import cn.apiclub.captcha.Captcha;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import ir.maktabsharif115.springboot.config.captcha.CaptchaGenerator;
 import ir.maktabsharif115.springboot.config.captcha.CaptchaTextProducer;
 import ir.maktabsharif115.springboot.config.captcha.CaptchaUtils;
@@ -13,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +35,74 @@ public class UserRegisterResource {
     private final Semaphore semaphore = new Semaphore(1, true);
 
     @PostMapping
+    @Operation(
+            description = "This is description",
+            summary = "This is summary",
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = """
+                                    possible messages:
+                                        * one of required fields not valid
+                                    """,
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            examples = {
+                                                    @ExampleObject(
+                                                            name = "required fields not filled",
+                                                            value = """
+                                                                    {
+                                                                        "timestamp": "2023-02-20T13:04:41.598+00:00",
+                                                                        "status": "BAD_REQUEST",
+                                                                        "statusCode": 400,
+                                                                        "errors": [
+                                                                            {
+                                                                                 "field": "firstName",
+                                                                                 "message": "must not be blank"
+                                                                            },
+                                                                            {
+                                                                                 "field": "lastName",
+                                                                                 "message": "must not be blank"
+                                                                            },
+                                                                            {
+                                                                                 "field": "mobileNumber",
+                                                                                 "message": "must not be blank"
+                                                                            },
+                                                                            {
+                                                                                 "field": "username",
+                                                                                 "message": "must not be blank"
+                                                                            },
+                                                                            {
+                                                                                 "field": "password",
+                                                                                 "message": "must not be null"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                    """
+                                                    ),
+                                                    @ExampleObject(
+                                                            name = "another example",
+                                                            value = """
+                                                                    {
+                                                                        "timestamp": "2023-02-20T13:04:41.598+00:00",
+                                                                        "status": "BAD_REQUEST",
+                                                                        "statusCode": 400,
+                                                                        "errors": [
+                                                                            {
+                                                                                 "message": "another example"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                    """
+                                                    )
+                                            }
+                                    )
+                            }
+                    )
+            }
+    )
     @SneakyThrows
     public void registerUser(@RequestBody @Valid UserRegisterDTO dto, HttpSession httpSession) {
 

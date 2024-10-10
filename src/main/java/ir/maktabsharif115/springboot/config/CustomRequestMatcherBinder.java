@@ -11,7 +11,9 @@ public class CustomRequestMatcherBinder implements RequestMatchersBinder {
     @Override
     public String[] getPermitAllUrls() {
         return new String[]{
-                "/user/register/**"
+                "/user/register/**",
+                "/swagger-ui/**",
+                "/v3/api-docs/**",
         };
     }
 

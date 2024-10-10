@@ -8,3 +8,7 @@ spring:
     hibernate.ddl-auto: update
 
 my-username: ali
+
+#springdoc:
+#  api-docs:
+#    enabled: true
