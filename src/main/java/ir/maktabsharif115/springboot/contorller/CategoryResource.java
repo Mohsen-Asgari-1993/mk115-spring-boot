@@ -7,6 +7,7 @@ import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
 import ir.maktabsharif115.springboot.service.dto.CategoryUpdateDTO;
+import ir.maktabsharif115.springboot.util.CookieContextHolder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,7 @@ public class CategoryResource {
 //    @PreAuthorize("hasRole('ADMIN')")/*ROLE_ADMIN*/
 //    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")/*ROLE_ADMIN*/
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id, Authentication authentication) {
+        log.info(CookieContextHolder.getCookie());
         log.info(authentication.getName());
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication securityContextAuthentication = securityContext.getAuthentication();
