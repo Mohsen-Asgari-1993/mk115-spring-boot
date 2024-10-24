@@ -12,11 +12,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Slf4j
 public class CategoryAspect {
 
-    //    @Pointcut("@within(ir.maktabsharif115.springboot.service.CategoryService)")
-    @Pointcut("""
-            execution(public * ir.maktabsharif115.springboot.service.CategoryService.*(*)) ||
-            execution(public * ir.maktabsharif115.springboot.service.CategoryService.*())
-            """)
+    @Pointcut("within(ir.maktabsharif115.springboot.service.CategoryService+)")
+//    @Pointcut("""
+//            execution(public * ir.maktabsharif115.springboot.service.CategoryService.*(*)) ||
+//            execution(public * ir.maktabsharif115.springboot.service.CategoryService.*())
+//            """)
     public void logMethodName() {
     }
 
