@@ -4,6 +4,7 @@ import com.rabbitmq.client.Channel;
 import ir.maktabsharif115.springboot.config.RabbitMQConfiguration;
 import ir.maktabsharif115.springboot.service.dto.CategoryDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -29,7 +30,9 @@ public class RabbitService {
     }
 
     @RabbitListener(queues = RabbitMQConfiguration.CUSTOMER_QUEUE)
+    @SneakyThrows
     public void listenToRabbit(CategoryDTO message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
         log.info("message received id: {}, title: {}", message.getId(), message.getTitle());
+        channel.basicAck(tag, false);
     }
 }

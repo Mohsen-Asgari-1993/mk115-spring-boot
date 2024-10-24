@@ -1,5 +1,6 @@
 package ir.maktabsharif115.springboot;
 
+import ir.maktabsharif115.springboot.service.impl.RabbitService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -11,7 +12,7 @@ public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
-//        run.getBean(RabbitService.class).publishMessage();
+        run.getBean(RabbitService.class).publishMessage();
 
     }
 
