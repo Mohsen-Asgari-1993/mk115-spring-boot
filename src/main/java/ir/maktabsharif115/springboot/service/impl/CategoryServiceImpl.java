@@ -1,5 +1,6 @@
 package ir.maktabsharif115.springboot.service.impl;
 
+import ir.maktabsharif115.springboot.aspects.PrintMethodName;
 import ir.maktabsharif115.springboot.domain.Category;
 import ir.maktabsharif115.springboot.exceptions.GeneralRuntimeException;
 import ir.maktabsharif115.springboot.repository.CategoryRepository;
@@ -83,11 +84,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Cacheable(value = CACHE_NAME, key = "'all2'")
 //    @Cacheable(value = CACHE_NAME, key = "T(java.util.Objects).hash('all2')")
 //    @Cacheable(value = CACHE_NAME)
+    @PrintMethodName
     public List<Category> findAllForSiteTwo() {
         return baseRepository.findAllByIsActive(true);
     }
 
     @Override
+    @PrintMethodName
     public void print(String text) {
         log.info("in print String");
     }

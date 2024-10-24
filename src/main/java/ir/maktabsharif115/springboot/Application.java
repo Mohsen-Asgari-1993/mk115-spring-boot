@@ -1,6 +1,7 @@
 package ir.maktabsharif115.springboot;
 
 import ir.maktabsharif115.springboot.service.CategoryService;
+import ir.maktabsharif115.springboot.service.SmsSender;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -18,6 +19,7 @@ public class Application {
         categoryService.print("mohsen");
         categoryService.print(123456L);
 
+        run.getBean(SmsSender.class).send("093711111111", "content");
 
     }
 

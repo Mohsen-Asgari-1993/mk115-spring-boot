@@ -49,4 +49,9 @@ public class CategoryAspect {
         log.info("@Before {}", joinPoint.getSignature().getName());
     }
 
+    @Before("@annotation(PrintMethodName)")
+    public void beforePrintMethodName(JoinPoint joinPoint) {
+        log.info("beforePrintMethodName {}", joinPoint.getSignature().getName());
+    }
+
 }
