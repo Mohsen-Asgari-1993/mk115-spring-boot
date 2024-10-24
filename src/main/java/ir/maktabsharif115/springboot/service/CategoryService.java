@@ -19,4 +19,8 @@ public interface CategoryService {
     Category findById(Long id);
 
     List<Category> findAllForSiteTwo();
+
+    void print(String text);
+
+    void print(Long text);
 }

@@ -43,7 +43,6 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void testAspect() {
         log.info("in testAspect method");
-        throw new GeneralRuntimeException("ex", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -86,6 +85,16 @@ public class CategoryServiceImpl implements CategoryService {
 //    @Cacheable(value = CACHE_NAME)
     public List<Category> findAllForSiteTwo() {
         return baseRepository.findAllByIsActive(true);
+    }
+
+    @Override
+    public void print(String text) {
+        log.info("in print String");
+    }
+
+    @Override
+    public void print(Long text) {
+        log.info("in print Long");
     }
 
     private void setParent(Category category, Long parentId) {

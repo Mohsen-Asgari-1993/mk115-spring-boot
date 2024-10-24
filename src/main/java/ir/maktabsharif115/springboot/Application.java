@@ -12,8 +12,12 @@ public class Application {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(Application.class, args);
+        CategoryService categoryService = run.getBean(CategoryService.class);
+        categoryService.testAspect();
+        categoryService.findAllForSiteTwo();
+        categoryService.print("mohsen");
+        categoryService.print(123456L);
 
-        run.getBean(CategoryService.class).testAspect();
 
     }
 
