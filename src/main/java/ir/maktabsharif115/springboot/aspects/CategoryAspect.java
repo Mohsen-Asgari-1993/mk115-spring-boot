@@ -1,8 +1,10 @@
 package ir.maktabsharif115.springboot.aspects;
 
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
@@ -12,46 +14,39 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Slf4j
 public class CategoryAspect {
 
-    @Pointcut("within(ir.maktabsharif115.springboot.service.CategoryService+)")
-//    @Pointcut("""
-//            execution(public * ir.maktabsharif115.springboot.service.CategoryService.*(*)) ||
-//            execution(public * ir.maktabsharif115.springboot.service.CategoryService.*())
-//            """)
+    //    @Pointcut("within(ir.maktabsharif115.springboot.service.CategoryService+)")
+    @Pointcut(
+            """
+                    execution(public void ir.maktabsharif115.springboot.service.CategoryService.testAspect()) ||
+                    execution(public Long ir.maktabsharif115.springboot.service.CategoryService.testAspect(Long))
+                    """
+    )
     public void logMethodName() {
     }
 
-    @Before("logMethodName()")
-    public void logBefore(JoinPoint joinPoint) {
-        log.info("@Before {}", joinPoint.getSignature().getName());
+    @Around("logMethodName()")
+    public Object around(ProceedingJoinPoint joinPoint) {
+        beforeExecution(joinPoint);
+        Object proceed = null;
+        try {
+            proceed = joinPoint.proceed();
+            afterReturning(proceed, joinPoint);
+        } catch (Throwable e) {
+            afterThrowing(joinPoint);
+        }
+        return proceed;
     }
 
-    @After("logMethodName()")
-    public void logAfter(JoinPoint joinPoint) {
-        log.info("@After {}", joinPoint.getSignature().getName());
+    private void beforeExecution(ProceedingJoinPoint joinPoint) {
+        log.info("beforeExecution");
     }
 
-    @AfterReturning("logMethodName()")
-    public void logAfterReturning(JoinPoint joinPoint) {
-        log.info("@AfterReturning {}", joinPoint.getSignature().getName());
+    private void afterReturning(Object proceed, ProceedingJoinPoint joinPoint) {
+        log.info("afterReturning");
     }
 
-    @AfterThrowing("logMethodName()")
-    public void logAfterThrowing(JoinPoint joinPoint) {
-        log.info("@AfterThrowing {}", joinPoint.getSignature().getName());
-    }
-
-    @Pointcut("execution(public void ir.maktabsharif115.springboot.service.CategoryService.print(Long))")
-    public void printPointCut() {
-    }
-
-    @Before("printPointCut()")
-    public void beforePrint(JoinPoint joinPoint) {
-        log.info("@Before {}", joinPoint.getSignature().getName());
-    }
-
-    @Before("@annotation(PrintMethodName)")
-    public void beforePrintMethodName(JoinPoint joinPoint) {
-        log.info("beforePrintMethodName {}", joinPoint.getSignature().getName());
+    private void afterThrowing(ProceedingJoinPoint joinPoint) {
+        log.info("afterThrowing");
     }
 
 }

@@ -47,6 +47,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Long testAspect(Long id) {
+        log.info("in testAspect method with long arg {}", id);
+        return id;
+    }
+
+    @Override
     @Cacheable(value = CACHE_NAME, key = "'all1'")
 //    @Cacheable(value = CACHE_NAME)
     public List<Category> findAllForSite() {

@@ -12,6 +12,8 @@ public interface CategoryService {
 
     void testAspect();
 
+    Long testAspect(Long id);
+
     List<Category> findAllForSite();
 
     Category update(Category category);
