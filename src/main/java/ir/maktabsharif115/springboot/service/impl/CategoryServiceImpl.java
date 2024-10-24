@@ -7,6 +7,7 @@ import ir.maktabsharif115.springboot.service.CategoryService;
 import ir.maktabsharif115.springboot.service.dto.CategoryCreationDTO;
 import ir.maktabsharif115.springboot.util.CookieContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @SuppressWarnings("unused")
+@Slf4j
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository baseRepository;
@@ -36,6 +38,12 @@ public class CategoryServiceImpl implements CategoryService {
         category.setTitle(dto.getTitle());
         setParent(category, dto.getParentId());
         return baseRepository.save(category);
+    }
+
+    @Override
+    public void testAspect() {
+        log.info("in testAspect method");
+        throw new GeneralRuntimeException("ex", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override

@@ -10,6 +10,8 @@ public interface CategoryService {
 
     Category create(CategoryCreationDTO dto);
 
+    void testAspect();
+
     List<Category> findAllForSite();
 
     Category update(Category category);
